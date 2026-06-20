@@ -1,0 +1,61 @@
+{
+  "_comment": "HALAL SCAN AI — Permanent blacklist. All keys are lowercase. Add symbols to 'symbols' or substrings to 'substrings'.",
+
+  "symbols": [
+    "USDT", "USDC", "BUSD", "TUSD", "DAI", "FDUSD", "USDP", "UST", "USDD",
+    "EURS", "XSGD", "XIDR", "EURT", "GBPT", "BIDR",
+    "STETH", "WSTETH", "RETH", "CBETH", "FRXETH", "ANKRETH", "BETH",
+    "WBTC", "RENBTC", "HBTC", "BBTC",
+    "WETH", "WBNB", "WAVAX", "WSOL", "WMATIC", "WFTM",
+    "AAVE", "COMP", "MKR", "SNX", "LEND", "CREAM", "ALPACA", "VENUS",
+    "XVS", "ALPHA", "ANCHOR", "ANC",
+    "CHZ", "SANTOS", "BAR", "PSG", "JUV", "ASR", "ACM", "INTER", "ATM",
+    "LAZIO", "PORTO", "CITY", "NAVI", "SYS", "MENGO", "OG", "NMR",
+    "DOGE", "SHIB", "FLOKI", "PEPE", "BONK", "WIF", "MEME", "BOME",
+    "NEIRO", "TURBO", "COQ", "BRETT", "TOSHI", "MOG", "BABYDOGE",
+    "SAFEMOON", "ELON", "SAMO", "CHEEMS", "KISHU", "SHIBDOGE",
+    "PAXG", "XAUT", "DGX",
+    "ETHUP", "ETHDOWN", "BTCUP", "BTCDOWN", "BNBUP", "BNBDOWN",
+    "ADAUP", "ADADOWN", "XRPUP", "XRPDOWN", "DOTUP", "DOTDOWN",
+    "SOLUSDT", "LUNAUSDT", "LUNC",
+    "UST", "LUNA", "LUNC", "USTC",
+    "TUSD", "SUSD", "LUSD", "FRAX", "MIM", "CUSD", "CEUR"
+  ],
+
+  "substrings": [
+    "UP",
+    "DOWN",
+    "BULL",
+    "BEAR",
+    "3L",
+    "3S",
+    "5L",
+    "5S",
+    "HEDGE",
+    "SHORT",
+    "LONG",
+    "LEVERAGE",
+    "WRAPPED",
+    "STAKED",
+    "STETH",
+    "RETH",
+    "LIDO",
+    "SUSHI",
+    "SWAP",
+    "YIELD",
+    "FARM",
+    "VAULT",
+    "EARN",
+    "INTEREST"
+  ],
+
+  "categories": {
+    "stablecoins": ["USDT","USDC","BUSD","TUSD","DAI","FDUSD","USDP","EURS","XSGD","FRAX","LUSD","SUSD","CUSD"],
+    "leveraged_tokens": ["ETHUP","ETHDOWN","BTCUP","BTCDOWN","BNBUP","BNBDOWN","ADAUP","ADADOWN"],
+    "fan_tokens": ["CHZ","SANTOS","BAR","PSG","JUV","ASR","ACM","INTER","ATM","LAZIO","PORTO","CITY"],
+    "meme_coins": ["DOGE","SHIB","FLOKI","PEPE","BONK","WIF","MEME","BOME","NEIRO","TURBO","BABYDOGE"],
+    "wrapped_assets": ["WBTC","WETH","WBNB","WMATIC","WSOL","WFTM","WAVAX"],
+    "liquid_staking": ["STETH","WSTETH","RETH","CBETH","FRXETH","BETH"],
+    "interest_products": ["AAVE","COMP","MKR","SNX","CREAM","ALPACA","VENUS","XVS"]
+  }
+}

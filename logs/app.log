@@ -1,0 +1,236 @@
+2026-06-20 16:31:07,702 | INFO     | __main__ | ============================================================
+2026-06-20 16:31:07,703 | INFO     | __main__ |   HALAL SCAN AI PRO ULTIMATE — Starting
+2026-06-20 16:31:07,703 | INFO     | __main__ | ============================================================
+2026-06-20 16:31:19,315 | INFO     | scanner | Model loaded from C:\Users\adila\Downloads\files\halal_ai_production.pkl
+2026-06-20 16:31:19,316 | INFO     | __main__ | ✅ Model pre-loaded successfully.
+2026-06-20 16:31:19,922 | INFO     | werkzeug | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.113:5000
+2026-06-20 16:31:19,924 | INFO     | werkzeug | [33mPress CTRL+C to quit[0m
+2026-06-20 16:31:41,118 | ERROR    | app | Exception on / [GET]
+Traceback (most recent call last):
+  File "C:\Users\adila\AppData\Local\Python\pythoncore-3.11-64\Lib\site-packages\flask\app.py", line 1511, in wsgi_app
+    response = self.full_dispatch_request()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adila\AppData\Local\Python\pythoncore-3.11-64\Lib\site-packages\flask\app.py", line 919, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adila\AppData\Local\Python\pythoncore-3.11-64\Lib\site-packages\flask_cors\extension.py", line 206, in wrapped_function
+    return cors_after_request(app_any.make_response(f(*args, **kwargs)))
+                                                    ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adila\AppData\Local\Python\pythoncore-3.11-64\Lib\site-packages\flask\app.py", line 917, in full_dispatch_request
+    rv = self.dispatch_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adila\AppData\Local\Python\pythoncore-3.11-64\Lib\site-packages\flask\app.py", line 902, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)  # type: ignore[no-any-return]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adila\Downloads\files\app.py", line 114, in index
+    return render_template("index.html", model_ready=model_ready)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adila\AppData\Local\Python\pythoncore-3.11-64\Lib\site-packages\flask\templating.py", line 150, in render_template
+    template = app.jinja_env.get_or_select_template(template_name_or_list)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adila\AppData\Local\Python\pythoncore-3.11-64\Lib\site-packages\jinja2\environment.py", line 1087, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adila\AppData\Local\Python\pythoncore-3.11-64\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adila\AppData\Local\Python\pythoncore-3.11-64\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adila\AppData\Local\Python\pythoncore-3.11-64\Lib\site-packages\jinja2\loaders.py", line 126, in load
+    source, filename, uptodate = self.get_source(environment, name)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adila\AppData\Local\Python\pythoncore-3.11-64\Lib\site-packages\flask\templating.py", line 66, in get_source
+    return self._get_source_fast(environment, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\adila\AppData\Local\Python\pythoncore-3.11-64\Lib\site-packages\flask\templating.py", line 100, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: index.html
+2026-06-20 16:31:41,185 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:31:41] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2026-06-20 16:31:41,273 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:31:41] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-06-20 16:37:20,390 | INFO     | __main__ | ============================================================
+2026-06-20 16:37:20,390 | INFO     | __main__ |   HALAL SCAN AI PRO ULTIMATE — Starting
+2026-06-20 16:37:20,390 | INFO     | __main__ | ============================================================
+2026-06-20 16:37:22,529 | INFO     | scanner | Model loaded from C:\Users\adila\Downloads\files\halal_ai_production.pkl
+2026-06-20 16:37:22,530 | INFO     | __main__ | ✅ Model pre-loaded successfully.
+2026-06-20 16:37:22,566 | INFO     | werkzeug | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.113:5000
+2026-06-20 16:37:22,566 | INFO     | werkzeug | [33mPress CTRL+C to quit[0m
+2026-06-20 16:38:00,832 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:38:00] "GET / HTTP/1.1" 200 -
+2026-06-20 16:38:01,146 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:38:01] "GET /static/style.css HTTP/1.1" 200 -
+2026-06-20 16:38:01,251 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:38:01] "GET /static/app.js HTTP/1.1" 200 -
+2026-06-20 16:38:03,082 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:38:03] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:38:03,082 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:38:03] "GET /api/signals?min_prob=60&limit=100 HTTP/1.1" 200 -
+2026-06-20 16:38:03,082 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:38:03] "GET /api/history?limit=200 HTTP/1.1" 200 -
+2026-06-20 16:38:03,109 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:38:03] "GET /api/watchlist HTTP/1.1" 200 -
+2026-06-20 16:38:14,384 | INFO     | __main__ | Fresh scan requested: min_prob=60%, top_n=50
+2026-06-20 16:38:14,384 | INFO     | scanner | Starting full market scan (min_prob=60%, top_n=50)…
+2026-06-20 16:38:14,384 | INFO     | data_collector | Connecting to Binance…
+2026-06-20 16:38:22,140 | INFO     | data_collector | Raw spot USDT pairs found: 433
+2026-06-20 16:38:22,159 | INFO     | halal_filter | HalalFilter loaded: 108 symbols, 24 substrings
+2026-06-20 16:38:22,162 | INFO     | halal_filter | HalalFilter: 433 → 391 symbols (42 removed)
+2026-06-20 16:38:22,167 | INFO     | data_collector | Fetching 391 symbols × 1000 candles (1h)…
+2026-06-20 16:38:33,619 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:38:33] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:39:04,409 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:39:04] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:39:06,146 | INFO     | data_collector |   Progress: 50/391 (0 failed so far)
+2026-06-20 16:39:33,626 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:39:33] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:40:03,643 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:40:03] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:40:33,641 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:40:33] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:40:39,657 | INFO     | data_collector |   Progress: 100/391 (0 failed so far)
+2026-06-20 16:41:03,647 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:41:03] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:41:33,624 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:41:33] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:41:36,958 | INFO     | data_collector |   Progress: 150/391 (0 failed so far)
+2026-06-20 16:42:03,639 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:42:03] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:42:30,100 | INFO     | data_collector |   Progress: 200/391 (0 failed so far)
+2026-06-20 16:43:04,629 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:43:04] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:43:07,425 | WARNING  | data_collector | [SAGA/USDT] Network error (attempt 1/3): binance GET https://api.binance.com/api/v3/klines?interval=1h&limit=1000&symbol=SAGAUSDT. Retrying in 2s…
+2026-06-20 16:43:20,364 | WARNING  | data_collector | [SAGA/USDT] Network error (attempt 2/3): binance GET https://api.binance.com/api/v3/klines?interval=1h&limit=1000&symbol=SAGAUSDT. Retrying in 4s…
+2026-06-20 16:43:33,643 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:43:33] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:43:40,509 | INFO     | data_collector |   Progress: 250/391 (0 failed so far)
+2026-06-20 16:44:03,626 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:44:03] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:44:08,758 | INFO     | data_collector |   Progress: 300/391 (0 failed so far)
+2026-06-20 16:44:34,999 | INFO     | data_collector |   Progress: 350/391 (0 failed so far)
+2026-06-20 16:44:55,242 | INFO     | data_collector | Collection complete: 390/391 symbols fetched, 1 failed.
+2026-06-20 16:45:04,645 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:45:04] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:45:33,675 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:45:33] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:45:38,874 | INFO     | scanner | Scan complete: 31 signals above 60% | 444.5s elapsed
+2026-06-20 16:45:38,905 | INFO     | scanner | Signals saved → C:\Users\adila\Downloads\files\live_signals.csv
+2026-06-20 16:45:38,930 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:45:38] "POST /api/scan HTTP/1.1" 200 -
+2026-06-20 16:46:03,640 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:46:03] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:47:04,626 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:47:04] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:47:32,781 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:47:32] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:48:03,627 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:48:03] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:48:33,327 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:48:33] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:49:06,637 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:49:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:50:06,644 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:50:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:51:06,464 | INFO     | werkzeug | 127.0.0.1 - - [20/Jun/2026 16:51:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:52:18,500 | INFO     | __main__ | ============================================================
+2026-06-20 16:52:18,500 | INFO     | __main__ |   HALAL SCAN AI PRO ULTIMATE — Starting
+2026-06-20 16:52:18,500 | INFO     | __main__ | ============================================================
+2026-06-20 16:52:20,235 | INFO     | scanner | Model loaded from C:\Users\adila\Downloads\files\halal_ai_production.pkl
+2026-06-20 16:52:20,235 | INFO     | __main__ | ✅ Model pre-loaded successfully.
+2026-06-20 16:52:20,266 | INFO     | werkzeug | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.113:5000
+2026-06-20 16:52:20,266 | INFO     | werkzeug | [33mPress CTRL+C to quit[0m
+2026-06-20 16:53:19,044 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:53:19] "GET / HTTP/1.1" 200 -
+2026-06-20 16:53:19,397 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:53:19] "GET /static/style.css HTTP/1.1" 200 -
+2026-06-20 16:53:19,402 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:53:19] "GET /static/app.js HTTP/1.1" 200 -
+2026-06-20 16:53:21,389 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:53:21] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:53:21,415 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:53:21] "GET /api/watchlist HTTP/1.1" 200 -
+2026-06-20 16:53:21,704 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:53:21] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-06-20 16:53:21,736 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:53:21] "GET /api/signals?min_prob=60&limit=100 HTTP/1.1" 200 -
+2026-06-20 16:53:21,751 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:53:21] "GET /api/history?limit=200 HTTP/1.1" 200 -
+2026-06-20 16:53:25,969 | INFO     | __main__ | Fresh scan requested: min_prob=60%, top_n=50
+2026-06-20 16:53:25,969 | INFO     | scanner | Starting full market scan (min_prob=60%, top_n=50)…
+2026-06-20 16:53:25,969 | INFO     | data_collector | Connecting to Binance…
+2026-06-20 16:53:37,102 | INFO     | data_collector | Raw spot USDT pairs found: 433
+2026-06-20 16:53:37,104 | INFO     | halal_filter | HalalFilter loaded: 108 symbols, 24 substrings
+2026-06-20 16:53:37,108 | INFO     | halal_filter | HalalFilter: 433 → 391 symbols (42 removed)
+2026-06-20 16:53:37,109 | INFO     | data_collector | Fetching 391 symbols × 1000 candles (1h)…
+2026-06-20 16:53:51,417 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:53:51] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:54:13,648 | INFO     | data_collector |   Progress: 50/391 (0 failed so far)
+2026-06-20 16:54:22,313 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:54:22] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:54:39,672 | INFO     | data_collector |   Progress: 100/391 (0 failed so far)
+2026-06-20 16:54:52,324 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:54:52] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:55:09,258 | INFO     | data_collector |   Progress: 150/391 (0 failed so far)
+2026-06-20 16:55:22,325 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:55:22] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:55:34,829 | INFO     | data_collector |   Progress: 200/391 (0 failed so far)
+2026-06-20 16:55:52,317 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:55:52] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:56:01,701 | INFO     | data_collector |   Progress: 250/391 (0 failed so far)
+2026-06-20 16:56:22,312 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:56:22] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:56:29,557 | INFO     | data_collector |   Progress: 300/391 (0 failed so far)
+2026-06-20 16:56:52,326 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:56:52] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:56:56,017 | INFO     | data_collector |   Progress: 350/391 (0 failed so far)
+2026-06-20 16:57:16,751 | INFO     | data_collector | Collection complete: 390/391 symbols fetched, 1 failed.
+2026-06-20 16:57:21,411 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:57:21] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:57:29,047 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 16:57:29] "GET / HTTP/1.1" 200 -
+2026-06-20 16:57:29,116 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 16:57:29] "GET /static/style.css HTTP/1.1" 200 -
+2026-06-20 16:57:29,137 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 16:57:29] "GET /static/app.js HTTP/1.1" 200 -
+2026-06-20 16:57:29,355 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 16:57:29] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:57:29,365 | INFO     | __main__ | Serving signals from cache.
+2026-06-20 16:57:29,373 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 16:57:29] "GET /api/signals?min_prob=60&limit=100 HTTP/1.1" 200 -
+2026-06-20 16:57:29,424 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 16:57:29] "GET /api/watchlist HTTP/1.1" 200 -
+2026-06-20 16:57:29,469 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 16:57:29] "GET /api/history?limit=200 HTTP/1.1" 200 -
+2026-06-20 16:57:29,674 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 16:57:29] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-06-20 16:57:33,308 | INFO     | __main__ | Serving signals from cache.
+2026-06-20 16:57:33,308 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 16:57:33] "GET /api/signals?min_prob=60&limit=100 HTTP/1.1" 200 -
+2026-06-20 16:57:51,420 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:57:51] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:58:00,153 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 16:58:00] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:58:21,426 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:58:21] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:58:51,417 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:58:51] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:59:09,904 | INFO     | scanner | Scan complete: 34 signals above 60% | 343.9s elapsed
+2026-06-20 16:59:09,925 | INFO     | scanner | Signals saved → C:\Users\adila\Downloads\files\live_signals.csv
+2026-06-20 16:59:10,015 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:59:10] "POST /api/scan HTTP/1.1" 200 -
+2026-06-20 16:59:21,391 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:59:21] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:59:45,188 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 16:59:45] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 16:59:51,391 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 16:59:51] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:00:21,390 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:00:21] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:00:51,392 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:00:51] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:01:05,687 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 17:01:05] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:01:21,390 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:01:21] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:01:51,402 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:01:51] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:02:09,640 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 17:02:09] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-06-20 17:02:21,391 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:02:21] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:02:31,703 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 17:02:31] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:02:51,390 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:02:51] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:02:58,687 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 17:02:58] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:03:21,390 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:03:21] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:03:51,390 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:03:51] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:04:21,390 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:04:21] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:04:51,405 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:04:51] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:05:21,390 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:05:21] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:05:45,625 | INFO     | werkzeug | 192.168.0.111 - - [20/Jun/2026 17:05:45] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-06-20 17:05:51,391 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:05:51] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:06:39,657 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:06:39] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:06:51,390 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:06:51] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:07:22,328 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:07:22] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:07:52,317 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:07:52] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:08:22,330 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:08:22] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:09:06,322 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:09:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:10:06,327 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:10:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:11:06,313 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:11:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:11:23,777 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:11:23] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:11:25,800 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:11:25] "GET /api/signals?min_prob=60&limit=100 HTTP/1.1" 200 -
+2026-06-20 17:11:27,361 | INFO     | __main__ | Serving signals from cache.
+2026-06-20 17:11:27,362 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:11:27] "GET /api/signals?min_prob=60&limit=100 HTTP/1.1" 200 -
+2026-06-20 17:11:28,411 | INFO     | __main__ | Serving signals from cache.
+2026-06-20 17:11:28,412 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:11:28] "GET /api/signals?min_prob=60&limit=100 HTTP/1.1" 200 -
+2026-06-20 17:11:38,999 | INFO     | __main__ | Analyzing WLD…
+2026-06-20 17:11:44,148 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:11:44] "GET /api/analyze/WLD HTTP/1.1" 200 -
+2026-06-20 17:11:51,394 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:11:51] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:12:01,494 | INFO     | __main__ | Analyzing OPG…
+2026-06-20 17:12:05,938 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:12:05] "GET /api/analyze/OPG HTTP/1.1" 200 -
+2026-06-20 17:12:21,390 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:12:21] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:12:52,328 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:12:52] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:13:22,320 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:13:22] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:14:06,330 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:14:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:15:06,328 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:15:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:16:06,323 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:16:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:17:06,323 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:17:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:18:06,321 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:18:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:19:06,322 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:19:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:20:06,332 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:20:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:21:06,334 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:21:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:22:06,331 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:22:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:23:06,318 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:23:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:24:06,331 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:24:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:25:06,322 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:25:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:26:06,322 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:26:06] "GET /api/status HTTP/1.1" 200 -
+2026-06-20 17:53:57,202 | INFO     | __main__ | ============================================================
+2026-06-20 17:53:57,202 | INFO     | __main__ |   HALAL SCAN AI PRO ULTIMATE — Starting
+2026-06-20 17:53:57,203 | INFO     | __main__ | ============================================================
+2026-06-20 17:54:07,728 | INFO     | scanner | Model loaded from C:\Users\adila\Downloads\files\halal_ai_production.pkl
+2026-06-20 17:54:07,728 | INFO     | __main__ | ✅ Model pre-loaded successfully.
+2026-06-20 17:54:08,031 | INFO     | werkzeug | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.113:5000
+2026-06-20 17:54:08,032 | INFO     | werkzeug | [33mPress CTRL+C to quit[0m
+2026-06-20 17:54:08,124 | INFO     | werkzeug | 192.168.0.113 - - [20/Jun/2026 17:54:08] "GET /api/status HTTP/1.1" 200 -
