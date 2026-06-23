@@ -1,14 +1,6 @@
 """
 HALAL SCAN AI PRO ULTIMATE
-scanner.py — Live scanner engine.
-
-Fetches current candles for all halal USDT pairs, runs the trained model,
-ranks coins by probability, and saves live_signals.csv.
-
-Can be run standalone:
-    python scanner.py
-
-Or imported by app.py for API use.
+scanner.py — Live scanner engine with Order Flow integration.
 """
 
 import logging
@@ -25,11 +17,9 @@ from config import (
 )
 from data_collector import collect_all, collect_one
 from feature_engineer import engineer_features, FEATURE_NAMES
+from order_flow import get_order_flow
 
 logger = logging.getLogger(__name__)
-
-
-# ─── Model Loading ────────────────────────────────────────────────────────────
 
 _model    = None
 _features = None
@@ -53,10 +43,7 @@ def _get_model():
     return _model, _features
 
 
-# ─── Verdict Mapping ─────────────────────────────────────────────────────────
-
 def get_verdict(prob: float) -> str:
-    """Map probability to human verdict using VERDICT_RULES from config."""
     for verdict, threshold in VERDICT_RULES.items():
         if prob >= threshold:
             return verdict
@@ -64,34 +51,43 @@ def get_verdict(prob: float) -> str:
 
 
 def get_signal_strength(prob: float) -> int:
-    """Return signal strength 1–4 bars for UI display."""
-    if prob >= 0.85:   return 4
-    if prob >= 0.70:   return 3
-    if prob >= 0.50:   return 2
+    if prob >= 0.85: return 4
+    if prob >= 0.70: return 3
+    if prob >= 0.50: return 2
     return 1
 
 
-# ─── Single Symbol Analysis ──────────────────────────────────────────────────
-
-def analyze_symbol(symbol: str) -> Optional[Dict]:
+def get_combined_verdict(prob: float, flow_score: float) -> str:
     """
-    Full analysis pipeline for one symbol.
-    Used by My Coin Analyzer feature.
-
-    Returns dict with probability, indicators, verdict, or None on failure.
+    Combined verdict using both AI probability and order flow score.
+    Order flow acts as confirmation filter.
     """
-    # Normalise symbol
+    verdict = get_verdict(prob)
+
+    # Upgrade: BUY + strong flow = STRONG BUY
+    if verdict == "BUY" and flow_score >= 65:
+        return "STRONG BUY"
+
+    # Downgrade: high prob but selling pressure = WATCH
+    if verdict in ["STRONG BUY", "BUY"] and flow_score <= 35:
+        return "WATCH"
+
+    return verdict
+
+
+def analyze_symbol(symbol: str, include_order_flow: bool = True) -> Optional[Dict]:
+    """
+    Full analysis pipeline for one symbol including order flow.
+    """
     sym = symbol.upper().strip()
     if "/" not in sym:
         sym = f"{sym}/USDT"
 
-    # Fetch OHLCV
     df = collect_one(sym)
     if df is None or df.empty:
         logger.warning(f"[{sym}] Could not fetch data.")
         return None
 
-    # Feature engineering (no target needed)
     feat_df = engineer_features(df, add_target=False)
     if feat_df.empty:
         logger.warning(f"[{sym}] Feature engineering failed.")
@@ -99,16 +95,15 @@ def analyze_symbol(symbol: str) -> Optional[Dict]:
 
     latest = feat_df[FEATURE_NAMES].iloc[-1]
 
-    # Predict
     model, features = _get_model()
-    X = latest.values.reshape(1, -1)
+    X    = latest.values.reshape(1, -1)
     prob = float(model.predict_proba(X)[0, 1])
 
-    # Latest OHLCV info
     price = float(df["close"].iloc[-1])
+    base  = sym.replace("/USDT", "")
 
-    return {
-        "symbol":          sym.replace("/USDT", ""),
+    result = {
+        "symbol":          base,
         "full_symbol":     sym,
         "probability":     round(prob * 100, 2),
         "prob_raw":        round(prob, 4),
@@ -125,10 +120,39 @@ def analyze_symbol(symbol: str) -> Optional[Dict]:
         "return_24h":      round(float(latest["return_24h"]) * 100, 2),
         "return_72h":      round(float(latest["return_72h"]) * 100, 2),
         "scanned_at":      datetime.now(timezone.utc).isoformat(),
+        # Order flow defaults
+        "flow_score":      None,
+        "flow_signal":     None,
+        "taker_buy_ratio": None,
+        "ob_imbalance_pct": None,
+        "whale_buys":      None,
+        "whale_sells":     None,
+        "whale_net":       None,
+        "volume_delta_pct": None,
+        "combined_verdict": get_verdict(prob),
     }
 
+    # Fetch order flow
+    if include_order_flow:
+        try:
+            of = get_order_flow(sym)
+            if of:
+                result.update({
+                    "flow_score":       of["flow_score"],
+                    "flow_signal":      of["flow_signal"],
+                    "taker_buy_ratio":  of["taker_buy_ratio"],
+                    "ob_imbalance_pct": of["ob_imbalance_pct"],
+                    "whale_buys":       of["whale_buys"],
+                    "whale_sells":      of["whale_sells"],
+                    "whale_net":        of["whale_net"],
+                    "volume_delta_pct": of["volume_delta_pct"],
+                    "combined_verdict": get_combined_verdict(prob, of["flow_score"]),
+                })
+        except Exception as e:
+            logger.warning(f"[{sym}] Order flow fetch failed: {e}")
 
-# ─── Full Market Scan ────────────────────────────────────────────────────────
+    return result
+
 
 def run_scan(
     min_prob: float = PROB_THRESHOLD,
@@ -136,21 +160,12 @@ def run_scan(
     save_csv: bool = True,
 ) -> List[Dict]:
     """
-    Scan all halal USDT pairs. Returns ranked list of signals above min_prob.
-
-    Args:
-        min_prob: Minimum probability threshold (0-1).
-        top_n:    Maximum number of results to return.
-        save_csv: Save results to live_signals.csv.
-
-    Returns:
-        List of result dicts, sorted by probability descending.
+    Scan all halal USDT pairs with AI + order flow scoring.
     """
     logger.info(f"Starting full market scan (min_prob={min_prob:.0%}, top_n={top_n})…")
     model, features = _get_model()
     scan_start = time.time()
 
-    # Collect all data
     data = collect_all(apply_halal=True, verbose=True)
     results = []
 
@@ -170,7 +185,7 @@ def run_scan(
             price = float(df["close"].iloc[-1])
             base  = symbol.replace("/USDT", "")
 
-            results.append({
+            entry = {
                 "symbol":       base,
                 "probability":  round(prob * 100, 2),
                 "prob_raw":     round(prob, 4),
@@ -182,21 +197,38 @@ def run_scan(
                 "return_24h":   round(float(latest["return_24h"]) * 100, 2),
                 "return_72h":   round(float(latest["return_72h"]) * 100, 2),
                 "scanned_at":   datetime.now(timezone.utc).isoformat(),
-            })
+                "flow_score":   None,
+                "flow_signal":  None,
+                "taker_buy_ratio": None,
+                "whale_net":    None,
+                "combined_verdict": get_verdict(prob),
+            }
+
+            # Fetch order flow for top signals only (saves time)
+            try:
+                of = get_order_flow(symbol)
+                if of:
+                    entry.update({
+                        "flow_score":       of["flow_score"],
+                        "flow_signal":      of["flow_signal"],
+                        "taker_buy_ratio":  of["taker_buy_ratio"],
+                        "whale_net":        of["whale_net"],
+                        "combined_verdict": get_combined_verdict(prob, of["flow_score"]),
+                    })
+            except Exception:
+                pass
+
+            results.append(entry)
 
         except Exception as e:
             logger.debug(f"[{symbol}] Error during scan: {e}")
             continue
 
-    # Sort by probability
     results.sort(key=lambda r: r["prob_raw"], reverse=True)
     results = results[:top_n]
 
     elapsed = time.time() - scan_start
-    logger.info(
-        f"Scan complete: {len(results)} signals above {min_prob:.0%} | "
-        f"{elapsed:.1f}s elapsed"
-    )
+    logger.info(f"Scan complete: {len(results)} signals | {elapsed:.1f}s elapsed")
 
     if save_csv and results:
         _save_signals(results)
@@ -206,21 +238,17 @@ def run_scan(
 
 
 def _save_signals(results: List[Dict]) -> None:
-    """Save latest scan results to live_signals.csv."""
     df = pd.DataFrame(results)
     df.to_csv(SIGNALS_PATH, index=False)
     logger.info(f"Signals saved → {SIGNALS_PATH}")
 
 
 def _append_history(results: List[Dict]) -> None:
-    """Append results to signal_history.csv for historical display."""
     HISTORY_PATH.parent.mkdir(exist_ok=True)
     df = pd.DataFrame(results)
-
     if HISTORY_PATH.exists():
         existing = pd.read_csv(HISTORY_PATH)
         combined = pd.concat([existing, df], ignore_index=True)
-        # Keep last 10,000 rows
         combined = combined.tail(10_000)
         combined.to_csv(HISTORY_PATH, index=False)
     else:
@@ -228,7 +256,6 @@ def _append_history(results: List[Dict]) -> None:
 
 
 def load_last_signals() -> List[Dict]:
-    """Load most recent scan results from CSV for dashboard display."""
     if not SIGNALS_PATH.exists():
         return []
     try:
@@ -241,7 +268,6 @@ def load_last_signals() -> List[Dict]:
 
 
 def load_history(limit: int = 200) -> List[Dict]:
-    """Load signal history for the history dashboard tab."""
     if not HISTORY_PATH.exists():
         return []
     try:
@@ -251,24 +277,3 @@ def load_history(limit: int = 200) -> List[Dict]:
     except Exception as e:
         logger.error(f"Could not load history: {e}")
         return []
-
-
-# ─── Standalone Run ───────────────────────────────────────────────────────────
-
-if __name__ == "__main__":
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s | %(levelname)-8s | %(message)s",
-        datefmt="%H:%M:%S",
-    )
-    results = run_scan(min_prob=0.60, top_n=20, save_csv=True)
-    print(f"\n{'─'*70}")
-    print(f"{'Symbol':<12} {'Prob%':>7} {'Verdict':<12} {'RSI':>6} {'ADX':>6} {'VolRat':>8} {'Price':>12}")
-    print(f"{'─'*70}")
-    for r in results:
-        print(
-            f"{r['symbol']:<12} {r['probability']:>6.1f}% "
-            f"{r['verdict']:<12} {r['rsi']:>6.1f} {r['adx']:>6.1f} "
-            f"{r['volume_ratio']:>8.2f} {r['price']:>12.6f}"
-        )
-    print(f"{'─'*70}")

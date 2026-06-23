@@ -27,3 +27,4 @@ tqdm>=4.66.0
 
 # Logging & Serialization
 loguru>=0.7.0
+pillow>=10.0.0

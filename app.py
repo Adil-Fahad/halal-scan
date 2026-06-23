@@ -3,7 +3,6 @@ import logging
 import os
 import time
 from datetime import datetime, timezone
-from functools import wraps
 from threading import Lock
 
 from flask import Flask, jsonify, request, render_template, abort
@@ -18,6 +17,7 @@ from scanner import (
     analyze_symbol, run_scan, load_last_signals,
     load_history, load_model,
 )
+from order_flow import get_order_flow
 
 LOGS_DIR.mkdir(exist_ok=True)
 logging.basicConfig(
@@ -67,6 +67,8 @@ def _save_watchlist(wl: list):
     WATCHLIST_PATH.write_text(json.dumps(wl, indent=2))
 
 
+# ── Routes ────────────────────────────────────────────────────────────────────
+
 @app.route("/")
 def index():
     model_ready = MODEL_PATH.exists() and FEATURES_PATH.exists()
@@ -96,7 +98,7 @@ def api_signals():
     min_prob = float(request.args.get("min_prob", 60)) / 100
     limit    = int(request.args.get("limit", 50))
 
-    cache_key = f"signals_{min_prob:.2f}_{limit}"
+    cache_key   = f"signals_{min_prob:.2f}_{limit}"
     cached_data = _cache_get(cache_key)
     if cached_data is not None:
         return jsonify({"signals": cached_data, "from_cache": True})
@@ -125,7 +127,6 @@ def api_scan():
             keys_to_del = [k for k in _cache if k.startswith("signals_")]
             for k in keys_to_del:
                 del _cache[k]
-
         return jsonify({
             "success":   True,
             "count":     len(results),
@@ -151,21 +152,42 @@ def api_analyze(coin: str):
         return jsonify({**hit, "from_cache": True})
 
     try:
-        result = analyze_symbol(coin)
+        result = analyze_symbol(coin, include_order_flow=True)
         if result is None:
             return jsonify({
                 "error":  f"Could not fetch or analyse {coin}",
                 "symbol": coin,
                 "hint":   "Check the symbol is a valid Binance USDT spot pair.",
             }), 404
-
         _cache_set(cache_key, result)
         return jsonify({**result, "from_cache": False})
-
     except FileNotFoundError as e:
         return jsonify({"error": str(e), "hint": "Run train_model.py first."}), 503
     except Exception as e:
         logger.exception(f"Analysis failed for {coin}")
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/orderflow/<coin>")
+def api_orderflow(coin: str):
+    """Standalone order flow endpoint for any coin."""
+    coin = coin.upper().strip()
+    if not coin or len(coin) > 20:
+        abort(400)
+
+    cache_key = f"flow_{coin}"
+    hit = _cache_get(cache_key)
+    if hit is not None:
+        return jsonify({**hit, "from_cache": True})
+
+    try:
+        result = get_order_flow(coin)
+        if result is None:
+            return jsonify({"error": f"Could not fetch order flow for {coin}"}), 404
+        _cache_set(cache_key, result)
+        return jsonify({**result, "from_cache": False})
+    except Exception as e:
+        logger.exception(f"Order flow failed for {coin}")
         return jsonify({"error": str(e)}), 500
 
 
@@ -179,12 +201,11 @@ def api_watchlist_get():
         entry: dict = {"symbol": coin}
         if model_ok:
             try:
-                cache_key = f"analyze_{coin}"
-                hit = _cache_get(cache_key)
+                hit = _cache_get(f"analyze_{coin}")
                 if hit:
                     entry.update({
                         "probability": hit.get("probability"),
-                        "verdict":     hit.get("verdict"),
+                        "verdict":     hit.get("combined_verdict") or hit.get("verdict"),
                         "rsi":         hit.get("rsi"),
                         "price":       hit.get("price"),
                     })
@@ -239,7 +260,7 @@ def internal(e):
 
 if __name__ == "__main__":
     logger.info("=" * 60)
-    logger.info("  HALAL SCAN AI PRO ULTIMATE — Starting")
+    logger.info("  HALAL SCAN AI PRO ULTIMATE v2 — Starting")
     logger.info("=" * 60)
 
     if MODEL_PATH.exists():
@@ -249,7 +270,7 @@ if __name__ == "__main__":
         except Exception as e:
             logger.warning(f"Model pre-load failed: {e}")
     else:
-        logger.warning("⚠️  Model not found. Run train_model.py before scanning.")
+        logger.warning("⚠️  Model not found. Run train_model.py first.")
 
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=False)

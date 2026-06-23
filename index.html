@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>HALAL SCAN AI PRO ULTIMATE</title>
+  <meta name="theme-color" content="#7c3aed" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="HalalScan" />
+  <link rel="manifest" href="/static/manifest.json" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ── Header ────────────────────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🕌</span>
+        <div>
+          <div class="logo-title">HALAL SCAN AI</div>
+          <div class="logo-sub">PRO ULTIMATE</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <div id="status-dot" class="status-dot offline"></div>
+        <span id="status-text" class="status-text">Connecting…</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Main ──────────────────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- ══ TAB: SIGNALS ══════════════════════════════════════════════ -->
+    <section id="tab-signals" class="tab active">
+
+      <button class="btn btn-primary scan-btn" onclick="runFullScan()">
+        ⚡ Scan Market Now
+      </button>
+
+      <div class="stats-row">
+        <div class="stat-pill">
+          <div class="stat-pill-val" id="stat-total">—</div>
+          <div class="stat-pill-lbl">Total</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-pill-val accent" id="stat-strong">—</div>
+          <div class="stat-pill-lbl">Strong</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-pill-val purple" id="stat-buy">—</div>
+          <div class="stat-pill-lbl">Buys</div>
+        </div>
+        <div class="stat-pill">
+          <div class="stat-pill-val" id="stat-avg">—</div>
+          <div class="stat-pill-lbl">Avg %</div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <h2>🎯 Top Signals</h2>
+        <div class="section-meta">
+          <span id="signals-count" class="badge">—</span>
+          <span id="signals-time" class="timestamp"></span>
+          <button class="btn btn-sm" onclick="loadSignals()">↻</button>
+        </div>
+      </div>
+
+      <div id="signals-loading" class="loader hidden">
+        <div class="spinner"></div><span>Loading signals…</span>
+      </div>
+      <div id="signals-list"></div>
+
+    </section>
+
+    <!-- ══ TAB: ANALYZER ═════════════════════════════════════════════ -->
+    <section id="tab-analyzer" class="tab hidden">
+      <div class="section-header">
+        <h2>🔬 Coin Analyzer</h2>
+      </div>
+
+      <div class="analyzer-search">
+        <input id="coin-input" class="coin-input" type="text"
+               placeholder="Enter symbol… BTC, ONDO, FET"
+               onkeydown="if(event.key==='Enter') analyzeCoin()" />
+        <button class="btn btn-primary" onclick="analyzeCoin()">Go</button>
+      </div>
+
+      <div class="quick-pills">
+        <button class="pill" onclick="quickAnalyze('BTC')">BTC</button>
+        <button class="pill" onclick="quickAnalyze('ETH')">ETH</button>
+        <button class="pill" onclick="quickAnalyze('SOL')">SOL</button>
+        <button class="pill" onclick="quickAnalyze('ONDO')">ONDO</button>
+        <button class="pill" onclick="quickAnalyze('FET')">FET</button>
+        <button class="pill" onclick="quickAnalyze('RENDER')">RENDER</button>
+        <button class="pill" onclick="quickAnalyze('LINK')">LINK</button>
+        <button class="pill" onclick="quickAnalyze('AVAX')">AVAX</button>
+        <button class="pill" onclick="quickAnalyze('SUI')">SUI</button>
+        <button class="pill" onclick="quickAnalyze('TAO')">TAO</button>
+      </div>
+
+      <div id="analyzer-loading" class="loader hidden">
+        <div class="spinner"></div><span>Fetching live data + order flow…</span>
+      </div>
+      <div id="analyzer-error" class="error-box hidden"></div>
+      <div id="analyzer-result"></div>
+    </section>
+
+    <!-- ══ TAB: SCANNER ══════════════════════════════════════════════ -->
+    <section id="tab-scanner" class="tab hidden">
+      <div class="section-header">
+        <h2>📡 Scanner Filter</h2>
+      </div>
+
+      <div class="filter-card">
+        <div class="filter-row">
+          <span class="filter-label">Min Probability</span>
+          <input type="range" id="prob-slider" min="50" max="95" step="5" value="70"
+                 oninput="updateProbLabel(this.value)" />
+          <span class="prob-label" id="prob-label">70%</span>
+        </div>
+        <select id="limit-select" class="select" style="margin-bottom:.75rem">
+          <option value="10">Top 10</option>
+          <option value="20">Top 20</option>
+          <option value="50" selected>Top 50</option>
+        </select>
+        <button class="btn btn-primary" style="width:100%" onclick="filterSignals()">Apply Filter</button>
+      </div>
+
+      <div id="scanner-list">
+        <div class="loader"><span style="color:var(--text-muted)">Adjust filter and tap Apply.</span></div>
+      </div>
+    </section>
+
+    <!-- ══ TAB: WATCHLIST ════════════════════════════════════════════ -->
+    <section id="tab-watchlist" class="tab hidden">
+      <div class="section-header">
+        <h2>⭐ Watchlist</h2>
+        <button class="btn btn-sm" onclick="loadWatchlist()">↻</button>
+      </div>
+
+      <div class="wl-add-row">
+        <input id="wl-input" class="coin-input" type="text"
+               placeholder="Add coin… ONDO"
+               onkeydown="if(event.key==='Enter') addToWatchlist()" />
+        <button class="btn btn-primary" onclick="addToWatchlist()">+ Add</button>
+      </div>
+
+      <div id="watchlist-grid" class="wl-grid">
+        <div class="empty-wl">No coins yet. Add one above.</div>
+      </div>
+    </section>
+
+    <!-- ══ TAB: HISTORY ══════════════════════════════════════════════ -->
+    <section id="tab-history" class="tab hidden">
+      <div class="section-header">
+        <h2>📜 History</h2>
+        <button class="btn btn-sm" onclick="loadHistory()">↻</button>
+      </div>
+
+      <div class="glass-card">
+        <div id="history-list">
+          <div class="loader"><span style="color:var(--text-muted)">Loading…</span></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── Bottom Navigation ─────────────────────────────────────────── -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" onclick="showTab('signals')" id="nav-signals">
+      <span class="nav-icon">🎯</span>
+      <span>Signals</span>
+    </button>
+    <button class="nav-item" onclick="showTab('analyzer')" id="nav-analyzer">
+      <span class="nav-icon">🔬</span>
+      <span>Analyze</span>
+    </button>
+    <button class="nav-item" onclick="showTab('scanner')" id="nav-scanner">
+      <span class="nav-icon">📡</span>
+      <span>Scanner</span>
+    </button>
+    <button class="nav-item" onclick="showTab('watchlist')" id="nav-watchlist">
+      <span class="nav-icon">⭐</span>
+      <span>Watchlist</span>
+    </button>
+    <button class="nav-item" onclick="showTab('history')" id="nav-history">
+      <span class="nav-icon">📜</span>
+      <span>History</span>
+    </button>
+  </nav>
+
+  <!-- ── Toast ─────────────────────────────────────────────────────── -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- ── Scan Modal ────────────────────────────────────────────────── -->
+  <div id="scan-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="spinner lg" style="margin:0 auto"></div>
+      <h3>Scanning Market…</h3>
+      <p>Fetching candles + order flow for all halal pairs.<br>This takes 10–20 minutes.</p>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/static/sw.js')
+          .then(r => console.log('SW:', r.scope))
+          .catch(e => console.log('SW err:', e));
+      });
+    }
+  </script>
+</body>
+</html>
